@@ -32,5 +32,12 @@ services:
     ports:
       - "5432:5432"
 
+    frontend:
+  build:
+    context: ./frontend
+    dockerfile: Dockerfile
+  ports:
+    - "3000:80" # Map port 3000 on the host to port 80 in the container
+
 volumes:
   db_data:
