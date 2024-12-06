@@ -15,7 +15,7 @@ services:
   backend:
     build:
       context: ./backend/app
-    dockerfile: Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     environment:
@@ -27,7 +27,6 @@ services:
   db:
     build:
       context: ./db
-      dockerfile: Dockerfile
     image: postgres:13
     environment:
       - POSTGRES_PASSWORD=postgres
