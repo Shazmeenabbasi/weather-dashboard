@@ -1,29 +1,24 @@
-# Use the official Node.js image to build the frontend
+# Use the official Node.js image as the base
 FROM node:16 as build
 
-# Set the working directory inside the container
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files
-COPY package.json package-lock.json /app/
+# Copy package.json and package-lock.json (if exists) into the container
+COPY package.json /app/
+COPY package-lock.json /app/  # If you have package-lock.json, include it
 
 # Install dependencies
 RUN npm install
 
-# Copy the application source code
-COPY . /app/
+# Copy the rest of the application files
+COPY . /app
 
-# Build the frontend
+# Build the application (e.g., for React or similar frontend apps)
 RUN npm run build
 
-# Serve the frontend using a lightweight web server (e.g., Nginx)
-FROM nginx:1.23-alpine
-
-# Copy the build output to the Nginx HTML directory
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose the port on which Nginx runs
+# Expose the necessary port
 EXPOSE 80
 
-# Start the Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+# Specify the command to run the app (this might change based on your app)
+CMD ["npm", "start"]
