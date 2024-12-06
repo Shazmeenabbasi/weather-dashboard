@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
   frontend:
@@ -16,12 +16,11 @@ services:
       - "5000:5000"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/weatherdb
-      - OPENWEATHERMAP_API_KEY=fec734c51bd96203d583749fb62d52e6
+      - OPENWEATHERMAP_API_KEY=your_api_key_here
     depends_on:
       - db
 
   db:
-    build: ./db
     image: postgres:13
     environment:
       - POSTGRES_PASSWORD=postgres
@@ -31,6 +30,3 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
-
-volumes:
-  db_data:
