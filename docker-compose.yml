@@ -2,7 +2,9 @@ version: '3.7'
 
 services:
   frontend:
-    build: ./frontend/app
+    build:
+      context: ./frontend/app
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
@@ -11,7 +13,9 @@ services:
       - backend
 
   backend:
-    build: ./backend/app
+    build:
+      context: ./backend/app
+    dockerfile: Dockerfile
     ports:
       - "5000:5000"
     environment:
@@ -21,7 +25,9 @@ services:
       - db
 
   db:
-    build: ./db
+    build:
+      context: ./db
+      dockerfile: Dockerfile
     image: postgres:13
     environment:
       - POSTGRES_PASSWORD=postgres
@@ -31,13 +37,6 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
-
-    frontend:
-  build:
-    context: ./frontend
-    dockerfile: Dockerfile
-  ports:
-    - "3000:80" # Map port 3000 on the host to port 80 in the container
 
 volumes:
   db_data:
